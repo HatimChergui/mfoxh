@@ -83,4 +83,4 @@ II. To recompile the source files for MacOS
 Tests
 -----
 
-Detailed test examples are available at tests.m.
+Detailed test examples are available in tests.m.
