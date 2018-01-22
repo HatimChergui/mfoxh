@@ -18,7 +18,7 @@ Contact email: chergui@ieee.org
 Download
 --------
 
-The package can be downloaded from https://github.com
+The package can be downloaded from https://github.com/HatimChergui/mfoxh
 
 Content
 -------
