@@ -1,6 +1,12 @@
  % We settle here to two scenarios: 2 and 3 dimensions. Higher diemnsions 
  % can also be tackled by this package but powerful machines should be used
  % in that case.
+ % ****************************************************************************************************************
+ % Citation: If you use this software or any (modified) part of it, please cite it as:
+ % Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini. (2018, January 22). 
+ % Multivariate Fox H-Function C/MEX Package: mfoxh (Version v1.0). Zenodo. http://doi.org/10.5281/zenodo.1157194
+ % ****************************************************************************************************************
+ %
  %*************************** 2-Dimensions ******************************** 
  index = [0 1 1 1 1 1]; % [0 m m1 n1 m2 n2 ...mM nM]
  z = [1 2]; % [z1...zM]
