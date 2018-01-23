@@ -2,9 +2,11 @@ function c = mfoxcontour(W, dim, index, A, varargin)
 % Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
 % and Mohamed-Slim Alouini. Contact email <chergui@ieee.org>
 % 
-% If you use this software or any (modified) part of it, please cite 
-% the submitted paper: "K-Factor-Based Analysis of XLOS Service 
-% Probability in 5G Ultra-Dense Networks". [Online]. Available: arxiv.org/
+% ****************************************************************************************************************
+% Citation: If you use this software or any (modified) part of it, please cite it as:
+% Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini. (2018, January 22). 
+% Multivariate Fox H-Function C/MEX Package: mfoxh (Version v1.0). Zenodo. http://doi.org/10.5281/zenodo.1157194
+% ****************************************************************************************************************
 %
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
