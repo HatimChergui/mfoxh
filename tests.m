@@ -1,4 +1,7 @@
- %*************************** 2-Dimensions ******************************* 
+ % We settle here to two scenarios: 2 and 3 dimensions. Higher diemnsions 
+ % can also be tackled by this package but powerful machines should be used
+ % in that case.
+ %*************************** 2-Dimensions ******************************** 
  index = [0 1 1 1 1 1]; % [0 m m1 n1 m2 n2 ...mM nM]
  z = [1 2]; % [z1...zM]
  A = [1.5 1.0 1.0; 2.0 1.0 1.0]; % [a1 alpha_1,1...alpha_1,M; ...; ap alpha_p,1...alpha_p,M]
@@ -16,7 +19,7 @@
  mfoxh(index, z, A, B, A1, B1, A2, B2, c, MaxFunEval, AbsTol)
  toc;
 
- %************************** 3-Dimensions ***************************** 
+ %***************************** 3-Dimensions ****************************** 
  index = [0 1 1 1 1 1 1 1];
  z = [1 2 0.5];
  A = [1.5 1.0 1.0 1; 2.0 1.0 1.0 1];
@@ -30,7 +33,7 @@
  %c  = [-0.5-10i 1.5-10i 0.5-10i;-0.5+10i 1.5+10i 0.5+10i];
  c = mfoxcontour(10, 3, index, A, A1, B1, A2, B2, A3, B3)
 % Tolerence settings
- MaxFunEval = 1e5; % increase it to get more precision (especially for more than 2 dimensions)
+ MaxFunEval = 2*1e6; % increase it to get more precision (especially for more than 2 dimensions)
  AbsTol     = 1e-4;
  tic;
  mfoxh(index, z, A, B, A1, B1, A2, B2, A3, B3, c, MaxFunEval, AbsTol)
