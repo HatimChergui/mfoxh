@@ -9,10 +9,9 @@ Developed by
 
 Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini
 
-Please cite the following paper:
+If you use this software or any (modified) part of it, please cite it as:
 
-Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, "K-Factor-Based Analysis 
-of XLOS Service Probability in 5G Ultra-Dense Networks". Submitted for publication. [Online]. Available: arxiv.org/
+Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Multivariate Fox H-Function C/MEX Package: mfoxh”. Zenodo, 23-Jan-2018.
 
 Contact email: chergui@ieee.org
 
