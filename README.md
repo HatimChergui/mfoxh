@@ -25,13 +25,13 @@ Content
 
 The package contains the following files:
 
-1. mfoxh.c       : the main file including the MEX gateway function
-2. mfoxfuncs.c   : including many functions used in the computation, such as the integrand definition, complex quasi-Monte-Carlo integration...
-3. mfox.h        : header file
-4. mfoxcontour.m : a MATLAB function that calculates the complex multivariate integration contour using a fast linear programming algorithm.
-5. mfoxh.mexwin64: MEX routine that can be called from MATLAB win64 (see tests.m for examples).
-6. mfoxh.        : MEX routine that can be called from MATLAB (see tests.m for examples).
-7. tests.m       : Examples
+1. mfoxh.c        : the main file including the MEX gateway function
+2. mfoxfuncs.c    : including many functions used in the computation, such as the integrand definition, complex quasi-Monte-Carlo integration...
+3. mfox.h         : header file
+4. mfoxcontour.m  : a MATLAB function that calculates the complex multivariate integration contour using a fast linear programming algorithm.
+5. mfoxh.mexwin64 : MEX routine that can be called from MATLAB win64 (see tests.m for examples).
+6. mfoxh.mexmaci64: MEX routine that can be called from MATLAB MacOS (see tests.m for examples).
+7. tests.m        : Examples
 
 MEX Build Instruction
 ---------------------
@@ -59,7 +59,7 @@ I. To recompile the source files for win64
    mex -LGSL_DIRECTORY/lib -o mfoxh.obj mfoxfuncs.obj -llibgsl -llibgslcblas
 
 
-II. To recompile the source files for MacOS
+II. To recompile the source files for MacOS (High Sierra)
 
 1. Install GNU GSL library in a GSL_DIRECTORY of your choice (e.g., /usr/local)
 
@@ -77,7 +77,7 @@ II. To recompile the source files for MacOS
    
    mex -IGSL_DIRECTORY/include -c mfoxh.c mfoxfuncs.c
    
-   mex -LGSL_DIRECTORY/lib -o mfoxh.o mfoxfuncs.o -lgsl -lgslcblas
+   mex -LGSL_DIRECTORY/lib mfoxh.o mfoxfuncs.o -lgsl -lgslcblas
 
 
 Tests
