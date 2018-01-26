@@ -1,4 +1,4 @@
-Multivariate Fox H-Function [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1157833.svg)](https://doi.org/10.5281/zenodo.1157833)
+Multivariate Fox H-Function [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1161052.svg)](https://doi.org/10.5281/zenodo.1161052)
 
 Version 1.1, Jan 22, 2018. 
 
