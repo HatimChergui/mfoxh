@@ -61,28 +61,6 @@ I. To recompile the source files for win64
    
    mex -LGSL_DIRECTORY/lib -o mfoxh.obj mfoxfuncs.obj -llibgsl -llibgslcblas
 
-
-II. To recompile the source files for MacOS (High Sierra)
-
-1. Install GNU GSL library in a GSL_DIRECTORY of your choice (e.g., /usr/local)
-
-2. A GSL bug fix: Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
-
-   #define GSL_REAL(z)     ((z).dat[0])
-   
-   #define GSL_IMAG(z)     ((z).dat[1])
-   
-   #define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
-
-3. Under MATLAB command line: 
-
-   cd to the files directory
-   
-   mex -IGSL_DIRECTORY/include -c mfoxh.c mfoxfuncs.c
-   
-   mex -LGSL_DIRECTORY/lib mfoxh.o mfoxfuncs.o -lgsl -lgslcblas
-
-
 Tests
 -----
 
