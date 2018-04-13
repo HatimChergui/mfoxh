@@ -1,12 +1,12 @@
 /*
- * Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
+  * Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
  * and Mohamed-Slim Alouini. Contact email <chergui@ieee.org>
+ ****************************************************************************************************************
+* Citation: If you use this software or any (modified) part of it, please cite it as:
+ * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini.
+ * "Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks". [Online] Avaialble: arxiv.org
+
  * **************************************************************************************************************
- * Citation: If you use this software or any (modified) part of it, please cite it as:
- * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini. (2018, January 22). 
- * Multivariate Fox H-Function C/MEX Package: mfoxh (Version v1.0). Zenodo. http://doi.org/10.5281/zenodo.1157194
- * **************************************************************************************************************
- *
  * The quasi-Monte Carlo (QMC) complex integration has been devloped by 
  * extending the online real-valued QMC module https://github.com/diazona 
  * to the complex domain.
@@ -25,6 +25,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <omp.h>
 #include <stdio.h>
 #include <math.h>
 #include <gsl/gsl_qrng.h>
