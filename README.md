@@ -1,8 +1,11 @@
-Multivariate Fox H-Function [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1161052.svg)](https://doi.org/10.5281/zenodo.1161052)
+Multivariate Fox H-Function [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1217925.svg)](https://doi.org/10.5281/zenodo.1217925)
 
-Version 1.1, Jan 26, 2018. 
+Version 1.2, April, 2018. 
+This package includes both source and compiled MATLAB MEX routines for win64.
 
-This package includes both source and compiled MATLAB MEX routines for win64 and MacOS.
+Changes
+-------
+Fast code using parallel multi-thread computation using OpenMP.
 
 Developed by
 -------------
@@ -11,7 +14,7 @@ Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini
 
 If you use this software or any (modified) part of it, please cite it as:
 
-Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Multivariate Fox H-Function C/MEX Package: mfoxh,” Zenodo, 23 Jan. 2018. DOI: 10.5281/zenodo.1161052
+Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks", [Online] Preprint available: arxiv.org
 
 Contact email: chergui[at]ieee[dot]org
 
