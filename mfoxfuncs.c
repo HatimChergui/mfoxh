@@ -1,12 +1,11 @@
 /*
- * Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
+  * Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
  * and Mohamed-Slim Alouini. Contact email <chergui@ieee.org>
- * **************************************************************************************************************
+ ****************************************************************************************************************
  * Citation: If you use this software or any (modified) part of it, please cite it as:
- * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini. (2018, January 22). 
- * Multivariate Fox H-Function C/MEX Package: mfoxh (Version v1.0). Zenodo. http://doi.org/10.5281/zenodo.1157194
- * **************************************************************************************************************
- *
+ * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini.
+ * "Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks". [Online] Avaialble: arxiv.org
+ **************************************************************************************************************
  * The quasi-Monte Carlo (QMC) complex integration has been devloped by 
  * extending the online real-valued QMC module https://github.com/diazona 
  * to the complex domain.
@@ -25,6 +24,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -104,6 +104,7 @@ if(n > 0){
            gsl_vector_complex_sub(In, &an.vector);
            gsl_vector_complex_add(In, &An.vector);
 
+      
            for(i = 0; i < n; i++){
             gammaz(gsl_vector_complex_get(In,i), &tmpn);
             zn = gsl_complex_mul(zn, tmpn) ;
@@ -118,6 +119,7 @@ if(n < p){
            gsl_vector_complex_scale(&Ap.vector, x);
            gsl_vector_complex_sub(&ap.vector, &Ap.vector);
 
+         
            for(i = 0; i < p-n; i++){
              gammaz(gsl_vector_complex_get(&ap.vector,i), &tmpp);
              zp = gsl_complex_mul(zp, tmpp) ;
@@ -137,6 +139,7 @@ if(m > 0){
            gsl_vector_complex_scale(&Bm.vector, x);
            gsl_vector_complex_sub(&bm.vector,&Bm.vector);
 
+           
            for(i=0; i < m; i++){
             gammaz(gsl_vector_complex_get(&bm.vector,i), &tmpm);
             zm = gsl_complex_mul(zm, tmpm);
@@ -154,6 +157,7 @@ if(m < q){
            gsl_vector_complex_sub(Iq, &bq.vector);
            gsl_vector_complex_add(Iq, &Bq.vector);
 
+           
            for(i=0; i < q-m; i++){
             gammaz(gsl_vector_complex_get(Iq,i), &tmpq);
             zq = gsl_complex_mul(zq, tmpq) ;
@@ -201,6 +205,8 @@ if(n > 0){
           An = gsl_matrix_complex_submatrix (E, 0, 1, n, dim);
           gsl_vector_complex_sub(In, &an.vector);
           gsl_blas_zgemv(CblasNoTrans, GSL_COMPLEX_ONE, &An.matrix, x, GSL_COMPLEX_ONE, In);
+          
+          
           for(i = 0; i < n; i++){
            gammaz(gsl_vector_complex_get(In,i), &tn);
            zn = gsl_complex_mul(zn, tn);}
@@ -211,6 +217,8 @@ if(n < p){
           ap = gsl_matrix_complex_subcolumn (E, 0, n, p-n);
           Ap = gsl_matrix_complex_submatrix (E, n, 1, p-n, dim);
           gsl_blas_zgemv(CblasNoTrans, GSL_COMPLEX_NEGONE, &Ap.matrix, x, GSL_COMPLEX_ONE, &ap.vector);
+          
+        
           for(i = 0; i < p-n; i++){
            gammaz(gsl_vector_complex_get(&ap.vector,i), &tp);
            zp = gsl_complex_mul(zp, tp);
@@ -227,6 +235,8 @@ if(F->size2 != 1){
           Bq = gsl_matrix_complex_submatrix (F, 0, 1, q, dim);
           gsl_vector_complex_sub(Iq, &bq.vector);
           gsl_blas_zgemv(CblasNoTrans, GSL_COMPLEX_ONE, &Bq.matrix, x, GSL_COMPLEX_ONE, Iq);
+          
+       
           for(i=0; i < q; i++){
             gammaz(gsl_vector_complex_get(Iq,i), &tq);
             zq = gsl_complex_mul(zq, tq) ;
@@ -267,6 +277,18 @@ return gsl_complex_mul(gsl_complex_mul(gsl_complex_mul(z,zphi), zarg), NFOXH_Fac
 
 //####################### Complex QMC ########################
 
+int setIntegDomain(gsl_vector_complex *xl, gsl_vector_complex *xu, size_t dim, double *x, gsl_qrng* r, gsl_vector_complex *y){
+ size_t i;
+ //gsl_qrng_get(r, x);
+ for (i = 0; i < dim; i++) {
+       gsl_complex vu = gsl_vector_complex_get(xu,i);
+       gsl_complex vl = gsl_vector_complex_get(xl,i);
+       gsl_vector_complex_set(y, i, gsl_complex_add(vl , gsl_complex_mul_real(gsl_complex_sub(vu,vl), x[i])));
+       }  
+ return GSL_SUCCESS;
+}
+
+
 quasi_monte_state* quasi_monte_alloc(size_t dim) {
     quasi_monte_state* s = (quasi_monte_state*)malloc(sizeof(quasi_monte_state));
     if (s == NULL) {
@@ -293,12 +315,13 @@ int quasi_monte_integrate(gsl_vector_complex *xl, gsl_vector_complex *xu, size_t
 
 gsl_complex volume = GSL_COMPLEX_ONE, mean = GSL_COMPLEX_ZERO, variance_sum = GSL_COMPLEX_ZERO, running_avg_abserr = gsl_complex_rect(GSL_POSINF,GSL_POSINF);
 //double *xlr, *xli, *xur, *xui; 
-size_t n, i;
-gsl_vector_complex *y = NULL;
-y = gsl_vector_complex_alloc(dim);
-gsl_vector_complex_set_all(y, GSL_COMPLEX_ZERO);
+size_t n, m, i;
+//gsl_vector_complex *y = NULL;
+//y = gsl_vector_complex_alloc(dim);
+//gsl_vector_complex_set_all(y, GSL_COMPLEX_ZERO);
 double* x = state->x;
-gsl_complex fval;
+gsl_vector_complex *fvalvec;
+fvalvec = gsl_vector_complex_alloc(max_calls);
     
 
     // Check that the dimensionalities match
@@ -327,40 +350,55 @@ if (GSL_REAL(tu) < GSL_REAL(tl) || GSL_IMAG(tu) <= GSL_IMAG(tl)) {
     }
     // Compute the volume of the region
     for (i = 0; i < dim; i++) {
-gsl_complex vu = gsl_vector_complex_get(xu,i);
-gsl_complex vl = gsl_vector_complex_get(xl,i);
-
-        volume = gsl_complex_mul(volume, gsl_complex_sub(vu,vl));
+    gsl_complex vu = gsl_vector_complex_get(xu,i);
+    gsl_complex vl = gsl_vector_complex_get(xl,i);
+    volume = gsl_complex_mul(volume, gsl_complex_sub(vu,vl));
     }
-    for (n = 0; n < max_calls; n++) {
-        // Choose a quasirandom point in the integration region
-        gsl_qrng_get(r, x);
-        for (i = 0; i < dim; i++) {
-gsl_complex vu = gsl_vector_complex_get(xu,i);
-gsl_complex vl = gsl_vector_complex_get(xl,i);
-gsl_vector_complex_set(y, i, gsl_complex_add(vl , gsl_complex_mul_real (gsl_complex_sub(vu,vl), x[i])));
-        }
 
-        {
-           fval = mFoxIntegrand(y, dim, index, Arg);
+
+// Evaluate Integrand (in parallel)
+int nProcessors=omp_get_max_threads();  
+#pragma omp parallel num_threads(nProcessors)
+ {
+   // This code will be executed by nProcessors threads.
+   // Chunks of this loop will be divided amongst
+   // the nProcessors threads of the current team.
+   #pragma omp for private(m) schedule(dynamic, 1000)
+    for (m = 0; m < max_calls; m++){
+        
+        gsl_vector_complex *y = NULL;
+        y = gsl_vector_complex_alloc(dim);
+        gsl_vector_complex_set_all(y, GSL_COMPLEX_ZERO);
+    // Choose a quasirandom point in the integration region
+        gsl_qrng_get(r, x);
+        setIntegDomain(xl, xu, dim, x, r, y);
+        gsl_vector_complex_set(fvalvec,m, mFoxIntegrand(y, dim, index, Arg));
+    }
+ }
+
+// 
+    
+    for (n = 0; n < max_calls; n++) {
+        
+           gsl_complex fval = gsl_vector_complex_get(fvalvec,n);
            gsl_complex d = gsl_complex_sub(fval , mean);
            mean = gsl_complex_add(mean, gsl_complex_div_real(d ,(double)(n + 1.0)));
            variance_sum = gsl_complex_add(variance_sum,gsl_complex_mul_real(gsl_complex_mul(d,d), (double)(n/(n + 1.0))));
-        }
+     
         if (n > 1) {
             running_avg_abserr = gsl_complex_sqrt(gsl_complex_div_real(variance_sum,(double)((n + 1.0) * n)));
+            gsl_complex tol = gsl_complex_mul(volume, running_avg_abserr );
 
- gsl_complex tol = gsl_complex_mul(volume, running_avg_abserr );
-
-
-            if (fabs(GSL_REAL(tol)) < max_abserr && fabs(GSL_IMAG(tol)) < max_abserr) {
-                break;
+        if (fabs(GSL_REAL(tol)) < max_abserr && fabs(GSL_IMAG(tol)) < max_abserr) {
+            break;
             }
             /*if (gsl_complex_abs(gsl_complex_div(running_avg_abserr, mean)) < max_relerr) {
                 break;
             }*/
         }
     }
+   
+ 
     *result = gsl_complex_mul(volume , mean);
     *abserr = gsl_complex_mul(volume , running_avg_abserr);
     return GSL_SUCCESS;
