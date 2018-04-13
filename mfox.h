@@ -2,11 +2,11 @@
  * Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
  * and Mohamed-Slim Alouini. Contact email <chergui@ieee.org>
  ****************************************************************************************************************
- * Citation: If you use this software or any (modified) part of it, please cite it as:
- * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini. (2018, January 22). 
- * Multivariate Fox H-Function C/MEX Package: mfoxh (Version v1.0). Zenodo. http://doi.org/10.5281/zenodo.1157194
- * **************************************************************************************************************
- *
+* Citation: If you use this software or any (modified) part of it, please cite it as:
+ * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini.
+ * "Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks". [Online] Avaialble: arxiv.org
+
+**************************************************************************************************************
  * The quasi-Monte Carlo (QMC) complex integration has been devloped by 
  * extending the online real-valued QMC module https://github.com/diazona 
  * to the complex domain.
@@ -28,6 +28,7 @@
 #ifndef _MFOX_H_INCLUDE
 #define _MFOX_H_INCLUDE
 
+#include <omp.h>
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
 #include <gsl/gsl_vector_complex_double.h>
@@ -51,6 +52,7 @@ typedef struct {
 
 quasi_monte_state* quasi_monte_alloc(size_t dim);
 int quasi_monte_init(quasi_monte_state* s);
+int setIntegDomain(gsl_vector_complex *xl, gsl_vector_complex *xu, size_t dim, double *x, gsl_qrng* r, gsl_vector_complex *y);
 int quasi_monte_integrate(gsl_vector_complex *xl, gsl_vector_complex *xu, size_t dim, size_t max_calls, double max_relerr, double max_abserr, gsl_qrng* r, quasi_monte_state* state, gsl_complex *result, gsl_complex *abserr, gsl_matrix_int *index, gsl_matrix_complex *Arg[20]);
 void quasi_monte_free(quasi_monte_state* s);
 int gammaz(gsl_complex z, gsl_complex* b);
