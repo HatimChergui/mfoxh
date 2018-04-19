@@ -33,8 +33,7 @@ The package contains the following files:
 3. mfox.h         : header file
 4. mfoxcontour.m  : a MATLAB function that calculates the complex multivariate integration contour using a fast linear programming algorithm.
 5. mfoxh.mexwin64 : MEX routine that can be called from MATLAB win64 (see tests.m for examples).
-6. mfoxh.mexmaci64: MEX routine that can be called from MATLAB MacOS (see tests.m for examples).
-7. tests.m        : Examples
+6. tests.m        : Examples
 
 MEX Build Instruction
 ---------------------
