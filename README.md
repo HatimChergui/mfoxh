@@ -5,7 +5,7 @@ This package includes both source and compiled MATLAB MEX routines for win64.
 
 Changes
 -------
-Fast code using parallel multi-thread computation using OpenMP.
+Fast code using OpenMP-based parallel multi-thread computation.
 
 Developed by
 -------------
