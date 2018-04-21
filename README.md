@@ -38,10 +38,14 @@ The package contains the following files:
 MEX Build Instruction
 ---------------------
 
-I. To recompile the source files for win64
-
-1. Install GNU GSL library in a GSL_DIRECTORY of your choice (Directories with spaced names are not allowed in your full path. We recommend the installation of GSL in the mingw64 folder containing /include and /lib. In the below figure GSL_DIRECTORY = C:/mingw64/mingw64)
-
+To recompile the source files for win64
+#########################################################################################
+-Download Mingw64
+-Choose MingW 5.3 (compatible with MATLAB 2017b or 4.9.2 compatible with Matlab 2017a)
+-Choose x86_64 POSIX seh
+                    Install in c:\mingw64 (avoid folders with space such as Program Files),
+                    Add the folder C:/mingw64/mingw64/bin to PATH environment variable (EV),
+                    Add/set EV MW_MINGW64_LOC = C:/mingw64/mingw64/ (To let MATLAB detect the compilers).
 ![Screenshot](INCLUDE.png)
 
 2. Change the extensions of the GSL files in GSL_DIRECTORY/lib from .a to .lib
