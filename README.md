@@ -38,33 +38,49 @@ The package contains the following files:
 MEX Build Instruction
 ---------------------
 
-To recompile the source files for win64
-#########################################################################################
--Download Mingw64
--Choose MingW 5.3 (compatible with MATLAB 2017b or 4.9.2 compatible with Matlab 2017a)
--Choose x86_64 POSIX seh
-                    Install in c:\mingw64 (avoid folders with space such as Program Files),
-                    Add the folder C:/mingw64/mingw64/bin to PATH environment variable (EV),
-                    Add/set EV MW_MINGW64_LOC = C:/mingw64/mingw64/ (To let MATLAB detect the compilers).
-![Screenshot](INCLUDE.png)
-
-2. Change the extensions of the GSL files in GSL_DIRECTORY/lib from .a to .lib
+To recompile the source files for win64:
+1. Setup the environment:
+- Download Mingw64
+- Choose MingW 5.3 (compatible with MATLAB 2017b or mingW 64 4.9.2 compatible with Matlab 2017a)
+- Choose x86_64 POSIX seh
+- Install in c:\mingw64 (avoid folders with space such as Program Files),
+- Add the folder C:/mingw64/mingw64/bin to PATH environment variable (EV),
+- Add/set EV MW_MINGW64_LOC = C:/mingw64/mingw64/ (To let MATLAB detect the compilers).
+ 
+ ![Screenshot](ENV.png) ![Screenshot](PATH.png)
+ 
+ #########################################################################################################
+2. To install msys: 
+- Download msys
+- Unzip it somewhere, for example C:\msys so that C:\msys\bin contains (among others) bash.exe.
+- Doubleclick (or make a handy shortcut and run that) on C:\msys\msys.bat.
+- Type: sh /postinstall/pi.sh
+- Answer the friendly questions and you're all set up.
+#########################################################################################################
+3. To install gsl correctly:
+- From msys shell: cd to gsl folder:
+- ./configure --prefix=C:/mingw64/mingw64 (the folder containg bin, include and lib folders
+- make
+- make install
+- Change gsl .a libraries (libgsl.a, libgslcblas.a ...) extension to .lib to be detected by MATLAB
 
 ![Screenshot](LIB.png)
 
-3. A GSL bug fix: Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
+#########################################################################################################
+4. A GSL bug fix: 
+Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
 
-   #define GSL_REAL(z)     ((z).dat[0])
-   
-   #define GSL_IMAG(z)     ((z).dat[1])
-   
-   #define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
+#define GSL_REAL(z) ((z).dat[0])
 
-4. Under MATLAB command line: 
+#define GSL_IMAG(z) ((z).dat[1])
 
-   cd to the files directory
+#define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
+##########################################################################################################
+5. To compile/link in one shot:
+
+Under MATLAB command line, cd to the files directory and:
    
-   mex -IGSL_DIRECTORY/include -LGSL_DIRECTORY/lib CFLAGS="$CFLAGS -fopenmp" LDFLAGS="$LDFLAGS -fopenmp" -llibgsl -llibgslcblas mfoxh.c mfoxfuncs.c
+mex -IC:/mingw64/mingw64/include -LC:/mingw64/mingw64/lib CFLAGS="$CFLAGS -fopenmp" LDFLAGS="$LDFLAGS -fopenmp" -llibgsl -llibgslcblas mfoxh.c mfoxfuncs.c            
 
 Tests
 -----
