@@ -41,7 +41,8 @@ MEX Build Instruction
 I. To recompile the source files for win64
 
 1. Install GNU GSL library in a GSL_DIRECTORY of your choice (Directories with spaced names are not allowed in your full path. We recommend the installation of GSL in the mingw64 folder containing /include and /lib)
-![Screenshot](INCLUDE.png)
+
+![Screenshot](INCLUDE.png width="200" height="200")
 
 2. Change the extensions of the GSL files in GSL_DIRECTORY/lib from .a to .lib
 
