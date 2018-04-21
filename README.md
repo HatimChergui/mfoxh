@@ -56,9 +56,7 @@ I. To recompile the source files for win64
 
    cd to the files directory
    
-   mex -IGSL_DIRECTORY/include -c mfoxh.c mfoxfuncs.c
-   
-   mex -LGSL_DIRECTORY/lib -o mfoxh.obj mfoxfuncs.obj -llibgsl -llibgslcblas
+   mex -IGSL_DIRECTORY/include -LGSL_DIRECTORY/lib CFLAGS="$CFLAGS -fopenmp" LDFLAGS="$LDFLAGS -fopenmp" -llibgsl -llibgslcblas mfoxh.c mfoxfuncs.c
 
 Tests
 -----
