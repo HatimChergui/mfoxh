@@ -49,14 +49,13 @@ To recompile the source files for win64:
  
  ![Screenshot](ENV.png) ![Screenshot](PATH.png)
  
- #########################################################################################################
 2. To install msys: 
 - Download msys
 - Unzip it somewhere, for example C:\msys so that C:\msys\bin contains (among others) bash.exe.
 - Doubleclick (or make a handy shortcut and run that) on C:\msys\msys.bat.
 - Type: sh /postinstall/pi.sh
 - Answer the friendly questions and you're all set up.
-#########################################################################################################
+
 3. To install gsl correctly:
 - From msys shell: cd to gsl folder:
 - ./configure --prefix=C:/mingw64/mingw64 (the folder containg bin, include and lib folders
@@ -66,7 +65,6 @@ To recompile the source files for win64:
 
 ![Screenshot](LIB.png)
 
-#########################################################################################################
 4. A GSL bug fix: 
 Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
 
@@ -75,7 +73,7 @@ Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the foll
 #define GSL_IMAG(z) ((z).dat[1])
 
 #define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
-##########################################################################################################
+
 5. To compile/link in one shot:
 
 Under MATLAB command line, cd to the files directory and:
