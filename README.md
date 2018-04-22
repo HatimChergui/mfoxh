@@ -1,8 +1,11 @@
-Multivariate Fox H-Function [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1161052.svg)](https://doi.org/10.5281/zenodo.1161052)
+Multivariate Fox H-Function [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1217925.svg)](https://doi.org/10.5281/zenodo.1217925)
 
-Version 1.1, Jan 26, 2018. 
+Version 1.2, April, 2018. 
+This package includes both source and compiled MATLAB MEX routines for win64.
 
-This package includes both source and compiled MATLAB MEX routines for win64 and MacOS.
+Changes
+-------
+Fast code using OpenMP-based parallel multi-thread computation.
 
 Developed by
 -------------
@@ -11,7 +14,7 @@ Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini
 
 If you use this software or any (modified) part of it, please cite it as:
 
-Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Multivariate Fox H-Function C/MEX Package: mfoxh,” Zenodo, 23 Jan. 2018. DOI: 10.5281/zenodo.1161052
+Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks", [Online] Preprint available: arxiv.org
 
 Contact email: chergui[at]ieee[dot]org
 
@@ -30,55 +33,52 @@ The package contains the following files:
 3. mfox.h         : header file
 4. mfoxcontour.m  : a MATLAB function that calculates the complex multivariate integration contour using a fast linear programming algorithm.
 5. mfoxh.mexwin64 : MEX routine that can be called from MATLAB win64 (see tests.m for examples).
-6. mfoxh.mexmaci64: MEX routine that can be called from MATLAB MacOS (see tests.m for examples).
-7. tests.m        : Examples
+6. tests.m        : Examples
 
 MEX Build Instruction
 ---------------------
 
-I. To recompile the source files for win64
+To recompile the source files for win64:
+1. Setup the environment:
+- Download Mingw64
+- Choose MingW 5.3 (compatible with MATLAB 2017b or mingW 64 4.9.2 compatible with Matlab 2017a)
+- Choose x86_64 POSIX seh
+- Install in c:\mingw64 (avoid folders with space such as Program Files),
+- Add the folder C:/mingw64/mingw64/bin to PATH environment variable (EV),
+- Add/set EV MW_MINGW64_LOC = C:/mingw64/mingw64/ (To let MATLAB detect the compilers).
+ 
+ ![Screenshot](ENV.png)  ![Screenshot](PATH.png)
+ 
+2. To install msys: 
+- Download msys
+- Unzip it somewhere, for example C:\msys so that C:\msys\bin contains (among others) bash.exe.
+- Doubleclick (or make a handy shortcut and run that) on C:\msys\msys.bat.
+- Type: sh /postinstall/pi.sh
+- Answer the friendly questions and you're all set up.
 
-1. Install GNU GSL library in a GSL_DIRECTORY of your choice (Directories with spaced names are not allowed in your full path)
+3. To install gsl correctly:
+- From msys shell: cd to gsl folder:
+- ./configure --prefix=C:/mingw64/mingw64 (the folder containg bin, include and lib folders
+- make
+- make install
+- Change gsl .a libraries (libgsl.a, libgslcblas.a ...) extension to .lib to be detected by MATLAB
 
-2. Change the extensions of the GSL files in GSL_DIRECTORY/lib from .a to .lib
+![Screenshot](LIB.png)
 
-3. A GSL bug fix: Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
+4. A GSL bug fix: 
+Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
 
-   #define GSL_REAL(z)     ((z).dat[0])
+#define GSL_REAL(z) ((z).dat[0])
+
+#define GSL_IMAG(z) ((z).dat[1])
+
+#define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
+
+5. To compile/link in one shot:
+
+Under MATLAB command line, cd to the files directory and:
    
-   #define GSL_IMAG(z)     ((z).dat[1])
-   
-   #define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
-
-4. Under MATLAB command line: 
-
-   cd to the files directory
-   
-   mex -IGSL_DIRECTORY/include -c mfoxh.c mfoxfuncs.c
-   
-   mex -LGSL_DIRECTORY/lib -o mfoxh.obj mfoxfuncs.obj -llibgsl -llibgslcblas
-
-
-II. To recompile the source files for MacOS (High Sierra)
-
-1. Install GNU GSL library in a GSL_DIRECTORY of your choice (e.g., /usr/local)
-
-2. A GSL bug fix: Open file GSL_DIRECTORY/include/gsl_complex.h and replace -> by . as in the following:
-
-   #define GSL_REAL(z)     ((z).dat[0])
-   
-   #define GSL_IMAG(z)     ((z).dat[1])
-   
-   #define GSL_SET_COMPLEX(zp,x,y) do {(zp).dat[0]=(x); (zp).dat[1]=(y);} while(0)
-
-3. Under MATLAB command line: 
-
-   cd to the files directory
-   
-   mex -IGSL_DIRECTORY/include -c mfoxh.c mfoxfuncs.c
-   
-   mex -LGSL_DIRECTORY/lib mfoxh.o mfoxfuncs.o -lgsl -lgslcblas
-
+mex -IC:/mingw64/mingw64/include -LC:/mingw64/mingw64/lib CFLAGS="$CFLAGS -fopenmp" LDFLAGS="$LDFLAGS -fopenmp" -llibgsl -llibgslcblas mfoxh.c mfoxfuncs.c            
 
 Tests
 -----
