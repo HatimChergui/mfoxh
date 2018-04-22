@@ -47,7 +47,7 @@ To recompile the source files for win64:
 - Add the folder C:/mingw64/mingw64/bin to PATH environment variable (EV),
 - Add/set EV MW_MINGW64_LOC = C:/mingw64/mingw64/ (To let MATLAB detect the compilers).
  
- ![Screenshot](ENV.png)   ![Screenshot](PATH.png)
+ ![Screenshot](env2.png)   ![Screenshot](PATH.png)
  
 2. To install msys: 
 - Download msys
