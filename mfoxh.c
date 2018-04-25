@@ -2,10 +2,10 @@
   * Copyright 2018 Hatim Chergui, Mustapha Benjillali, 
  * and Mohamed-Slim Alouini. Contact email <chergui@ieee.org>
  ****************************************************************************************************************
-* Citation: If you use this software or any (modified) part of it, please cite it as:
+ * Citation: If you use this software or any (modified) part of it, please cite it as:
  * Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini.
- * "Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks". [Online] Avaialble: arxiv.org
-
+ * "Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks". 
+ * [Online] Avaialble: https://arxiv.org/abs/1804.08101
  * **************************************************************************************************************
  * The quasi-Monte Carlo (QMC) complex integration has been devloped by 
  * extending the online real-valued QMC module https://github.com/diazona 
