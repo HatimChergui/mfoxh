@@ -14,7 +14,7 @@ Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini
 
 If you use this software or any (modified) part of it, please cite it as:
 
-Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Rician $K$-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks", [Online] Preprint available: https://arxiv.org/abs/1804.08101
+Hatim Chergui, Mustapha Benjillali and Mohamed-Slim Alouini, “Rician K-Factor-Based Analysis of XLOS Service Probability in 5G Outdoor Ultra-Dense Networks", [Online] Preprint available: https://arxiv.org/abs/1804.08101
 
 Contact email: chergui[at]ieee[dot]org
 
